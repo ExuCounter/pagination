@@ -7,6 +7,7 @@ const INITIAL_PAGE_NUMBER = 1
 type ListProps = {
   data: ListItemProps[]
   visibleItemsNumber: number
+  filterByTitle?: string
 }
 
 type ListPaginationArrowProps = {
@@ -39,19 +40,33 @@ export const ListPaginationArrow = ({
   )
 }
 
-export const List = ({ data: list, visibleItemsNumber }: ListProps) => {
+export const List = ({
+  data: list,
+  filterByTitle,
+  visibleItemsNumber,
+}: ListProps) => {
   const [pageNumber, setPageNumber] = useState<number>(INITIAL_PAGE_NUMBER)
 
-  const { isPreviousPageAvailable, isNextPageAvailable } = useMemo(() => {
-    const availablePagesNumber = Math.ceil(list.length / visibleItemsNumber)
+  const {
+    isPreviousPageAvailable,
+    isNextPageAvailable,
+    filteredList,
+  } = useMemo(() => {
+    const filteredList = filterByTitle
+      ? list.filter((item) => item.title.includes(filterByTitle))
+      : list
+    const availablePagesNumber = Math.ceil(
+      filteredList.length / visibleItemsNumber
+    )
     const isPreviousPageAvailable = pageNumber - 1 > 0
     const isNextPageAvailable = pageNumber + 1 <= availablePagesNumber
 
     return {
       isPreviousPageAvailable,
       isNextPageAvailable,
+      filteredList,
     }
-  }, [pageNumber, visibleItemsNumber, list])
+  }, [pageNumber, visibleItemsNumber, list, filterByTitle])
 
   useEffect(() => {
     setPageNumber(INITIAL_PAGE_NUMBER)
@@ -59,7 +74,7 @@ export const List = ({ data: list, visibleItemsNumber }: ListProps) => {
 
   const visibleList = useMemo(
     () =>
-      list.filter((_, idx) => {
+      filteredList.filter((_, idx) => {
         const viewedItemsNumber = pageNumber * visibleItemsNumber
 
         if (pageNumber === 1) {
@@ -71,7 +86,7 @@ export const List = ({ data: list, visibleItemsNumber }: ListProps) => {
           )
         }
       }),
-    [pageNumber, visibleItemsNumber, list]
+    [pageNumber, visibleItemsNumber, list, filteredList]
   )
 
   const goToPreviousPage = () => {
@@ -83,25 +98,23 @@ export const List = ({ data: list, visibleItemsNumber }: ListProps) => {
   }
 
   return (
-    <>
+    <div className="list-container">
       {visibleList.map((item, idx) => {
         return <ListItem key={idx} {...item} />
       })}
-      <>
-        <p>Page number {pageNumber}</p>
-        <ListPaginationArrowsContainer>
-          <ListPaginationArrow
-            disabled={!isPreviousPageAvailable}
-            content={'<'}
-            onClick={goToPreviousPage}
-          />
-          <ListPaginationArrow
-            disabled={!isNextPageAvailable}
-            content={'>'}
-            onClick={goToNextPage}
-          />
-        </ListPaginationArrowsContainer>
-      </>
-    </>
+      <p className="page-number">Page number {pageNumber}</p>
+      <ListPaginationArrowsContainer>
+        <ListPaginationArrow
+          disabled={!isPreviousPageAvailable}
+          content={'<'}
+          onClick={goToPreviousPage}
+        />
+        <ListPaginationArrow
+          disabled={!isNextPageAvailable}
+          content={'>'}
+          onClick={goToNextPage}
+        />
+      </ListPaginationArrowsContainer>
+    </div>
   )
 }
