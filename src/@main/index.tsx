@@ -1,6 +1,6 @@
 import { List } from '../List'
-
-const VISIBLE_ITEMS_NUMBER = 2
+import { useState } from 'react'
+import RSelect, { ValueType } from 'react-select'
 
 const fakeData = [
   { title: '1' },
@@ -17,6 +17,31 @@ const fakeData = [
   { title: '12' },
 ]
 
+type OptionType = { value: number; label: string }
+
+const options: OptionType[] = [
+  { value: 1, label: 'One Element' },
+  { value: 2, label: 'Two Elements' },
+  { value: 3, label: 'Three Elements' },
+]
+
 export const MainPage = () => {
-  return <List visibleItemsNumber={VISIBLE_ITEMS_NUMBER} data={fakeData} />
+  const [currentOption, setCurrentOption] = useState<
+    ValueType<OptionType, false>
+  >(options[0])
+
+  const handleSelect = (value: OptionType | null) => {
+    setCurrentOption(value)
+  }
+
+  return (
+    <>
+      <RSelect
+        options={options}
+        defaultValue={options[0]}
+        onChange={(e) => handleSelect(e)}
+      />
+      <List visibleItemsNumber={currentOption!.value} data={fakeData} />
+    </>
+  )
 }
