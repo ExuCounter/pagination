@@ -23,7 +23,7 @@ interface InititalProps
     LayoutProps,
     DisplayProps {}
 
-const Initial = styled.p`
+const Initial = styled.p<TextProps>`
   ${color}
   ${size}
   ${display}
@@ -36,8 +36,8 @@ type TextProps = PropsWithChildren<{}> &
   ComponentPropsWithoutRef<'p'> &
   InititalProps
 
-export const Text = ({ children, ...props }: TextProps) => (
-  <Initial p={0} m={0} {...props}>
+export const Text = ({ fontSize = 12, children, ...props }: TextProps) => (
+  <Initial fontSize={fontSize} p={0} m={0} {...props}>
     {children}
   </Initial>
 )

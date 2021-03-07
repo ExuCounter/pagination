@@ -68,12 +68,15 @@ const Controls = ({
         />
       )}
       {isFilterEnabled && (
-        <Input
-          value={filterString}
-          onChange={handleFilterInput}
-          label="Search"
-          placeholder="Search by value"
-        />
+        <Flex ml="auto">
+          <Input
+            minHeight="25px"
+            value={filterString}
+            onChange={handleFilterInput}
+            label="Search"
+            placeholder="Search by value"
+          />
+        </Flex>
       )}
     </Flex>
   )
@@ -126,7 +129,7 @@ export const MainPage = () => {
   const [currentOption, setCurrentOption] = useState<SelectOptionType>(
     SELECT_OPTIONS[0]
   )
-  const [isPaginationEnabled, setIsPaginationEnabled] = useState<boolean>(false)
+  const [isPaginationEnabled, setIsPaginationEnabled] = useState<boolean>(true)
   const [isFilterEnabled, setIsFilterEnabled] = useState<boolean>(false)
   const [filterString, setFilterString] = useState<string>('')
 

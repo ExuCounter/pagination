@@ -14,6 +14,16 @@ type ListProps = {
   paginated?: boolean
 }
 
+type PlainListProps = Pick<ListProps, 'data'>
+
+export const PlainList = ({ data: list }: PlainListProps) => (
+  <>
+    {list.map((item, idx) => (
+      <ListItem key={idx} {...item} />
+    ))}
+  </>
+)
+
 export const List = ({
   data: list,
   visibleItems = 5,
@@ -75,9 +85,7 @@ export const List = ({
     <Box>
       {paginated && (
         <>
-          {visibleList.map((item, idx) => (
-            <ListItem key={idx} {...item} />
-          ))}
+          <PlainList data={visibleList} />
           <ListPagination
             nextPageButtonText={nextPageButtonText}
             previousPageButtonText={previousPageButtonText}
@@ -89,7 +97,7 @@ export const List = ({
           />
         </>
       )}
-      {!paginated && list.map((item, idx) => <ListItem key={idx} {...item} />)}
+      {!paginated && <PlainList data={list} />}
     </Box>
   )
 }

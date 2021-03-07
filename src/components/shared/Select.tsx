@@ -5,6 +5,26 @@ import { Box } from 'components/shared/Box'
 
 type SelectProps<T, isMulti extends boolean> = RSelectProps<T, isMulti>
 
+const customStyles = {
+  option: (provided: any) => ({
+    ...provided,
+  }),
+  control: (provided: any) => ({
+    ...provided,
+    minHeight: '25px',
+    width: 200,
+  }),
+  dropdownIndicator: (provided: any) => ({
+    ...provided,
+    fontSize: 12,
+    padding: '0px 4px',
+  }),
+  valueContainer: (provided: any) => ({
+    ...provided,
+    fontSize: 12,
+  }),
+}
+
 export const Select = <T, isMulti extends false>({
   options = [],
   label,
@@ -14,9 +34,10 @@ export const Select = <T, isMulti extends false>({
   return (
     <Flex alignItems="center">
       {label ? <Text pr={3}>{label}</Text> : null}
-      <Box width={200}>
+      <Box>
         <RSelect<T, isMulti>
           options={options}
+          styles={customStyles}
           onChange={(value, action) => {
             onChange && onChange(value, action)
           }}
