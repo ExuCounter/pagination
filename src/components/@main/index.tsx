@@ -73,6 +73,7 @@ type ListSettingsProps = {
   isFilterEnabled: boolean
   setIsPaginationEnabled: (v: boolean) => void
   setIsFilterEnabled: (v: boolean) => void
+  setFilterString: (str: string) => void
 }
 
 const ListSettings = ({
@@ -80,12 +81,17 @@ const ListSettings = ({
   isFilterEnabled,
   setIsPaginationEnabled,
   setIsFilterEnabled,
+  setFilterString,
 }: ListSettingsProps) => {
   const updatePagination = () => {
     setIsPaginationEnabled(!isPaginationEnabled)
   }
   const updateFilter = () => {
     setIsFilterEnabled(!isFilterEnabled)
+    clearFilterString()
+  }
+  const clearFilterString = () => {
+    setFilterString('')
   }
   return (
     <>
@@ -136,6 +142,7 @@ export const MainPage = () => {
             isFilterEnabled={isFilterEnabled}
             setIsPaginationEnabled={setIsPaginationEnabled}
             setIsFilterEnabled={setIsFilterEnabled}
+            setFilterString={setFilterString}
           />
         </Flex>
         <Flex flexDirection="column" width="80%">
