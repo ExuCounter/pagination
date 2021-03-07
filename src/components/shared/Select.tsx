@@ -12,7 +12,7 @@ const customStyles = {
   control: (provided: any) => ({
     ...provided,
     minHeight: '25px',
-    width: 200,
+    width: '100%',
   }),
   dropdownIndicator: (provided: any) => ({
     ...provided,
@@ -32,9 +32,9 @@ export const Select = <T, isMulti extends false>({
   ...props
 }: SelectProps<T, isMulti>) => {
   return (
-    <Flex alignItems="center">
+    <Flex flexDirection="column">
       {label ? <Text pr={3}>{label}</Text> : null}
-      <Box>
+      <Box mt={1}>
         <RSelect<T, isMulti>
           options={options}
           styles={customStyles}

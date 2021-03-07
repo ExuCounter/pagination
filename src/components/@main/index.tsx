@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import { List } from '../List'
+import { List } from 'components/List'
 import { Select } from 'components/shared/Select'
 import { Input } from 'components/shared/Input'
 import { Button } from 'components/shared/Button'
+import { Text } from 'components/shared/Text'
 import { Flex } from 'components/shared/Flex'
 import { FAKE_LIST_DATA } from 'data/fakeData'
 
@@ -11,20 +12,9 @@ type SelectOptionType = {
   label: string
 }
 
-const SELECT_OPTIONS = [
-  {
-    value: 3,
-    label: 'Three elements',
-  },
-  {
-    value: 4,
-    label: 'Four elements',
-  },
-  {
-    value: 5,
-    label: 'Five elements',
-  },
-]
+const SELECT_OPTIONS = new Array(3)
+  .fill(0)
+  .map((_, idx) => ({ value: idx + 3, label: `${idx + 3}` }))
 
 type ListControlsProps = {
   isPaginationEnabled: boolean
@@ -44,7 +34,7 @@ const Controls = ({
   currentOption,
 }: ListControlsProps) => {
   return (
-    <Flex justifyContent="space-between">
+    <Flex mt={3} flexDirection="column">
       {isPaginationEnabled && (
         <Select
           options={SELECT_OPTIONS}
@@ -95,11 +85,13 @@ const ListSettings = ({
   }
   return (
     <>
-      Settings:
+      <Text fontSize={16} mb={3}>
+        Settings:
+      </Text>
       <Button
         sizing="md"
         variant="primary"
-        mb={3}
+        mb={2}
         active={isPaginationEnabled}
         onClick={updatePagination}
       >
@@ -121,7 +113,7 @@ export const MainPage = () => {
   const [currentOption, setCurrentOption] = useState<SelectOptionType>(
     SELECT_OPTIONS[0]
   )
-  const [isPaginationEnabled, setIsPaginationEnabled] = useState<boolean>(true)
+  const [isPaginationEnabled, setIsPaginationEnabled] = useState<boolean>(false)
   const [isFilterEnabled, setIsFilterEnabled] = useState<boolean>(false)
   const [filterString, setFilterString] = useState<string>('')
 
@@ -144,8 +136,6 @@ export const MainPage = () => {
             setIsFilterEnabled={setIsFilterEnabled}
             setFilterString={setFilterString}
           />
-        </Flex>
-        <Flex flexDirection="column" width="80%">
           <Controls
             isPaginationEnabled={isPaginationEnabled}
             isFilterEnabled={isFilterEnabled}
@@ -154,6 +144,11 @@ export const MainPage = () => {
             filterString={filterString}
             currentOption={currentOption}
           />
+        </Flex>
+        <Flex flexDirection="column" width="80%">
+          <Text mb="2" fontSize="20px">
+            List
+          </Text>
           <List
             data={FAKE_LIST_DATA}
             visibleItems={currentOption.value}
