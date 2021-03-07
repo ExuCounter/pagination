@@ -1,7 +1,7 @@
 import RSelect, { Props as RSelectProps } from 'react-select'
-import { Flex } from 'shared/Flex'
-import { Text } from 'shared/Text'
-import { Box } from 'shared/Box'
+import { Flex } from 'components/shared/Flex'
+import { Text } from 'components/shared/Text'
+import { Box } from 'components/shared/Box'
 
 type SelectProps<T, isMulti extends boolean> = RSelectProps<T, isMulti>
 

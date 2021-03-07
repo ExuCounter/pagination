@@ -1,18 +1,22 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
-import { MainPage } from './@main/index'
+import { MainPage } from './components/@main/index'
 import { Switch, Route, Redirect, BrowserRouter } from 'react-router-dom'
+import { ThemeProvider } from 'styled-components'
+import StyledTheme from 'components/shared/styled-theme'
 import reportWebVitals from './reportWebVitals'
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Switch>
-        <Route path="/" component={MainPage} exact />
-        <Redirect to="/" />
-      </Switch>
-    </BrowserRouter>
+    <ThemeProvider theme={StyledTheme}>
+      <BrowserRouter>
+        <Switch>
+          <Route path="/" component={MainPage} exact />
+          <Redirect to="/" />
+        </Switch>
+      </BrowserRouter>
+    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')
 )

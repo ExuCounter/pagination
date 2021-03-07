@@ -11,6 +11,8 @@ import {
   SpaceProps,
   layout,
   LayoutProps,
+  border,
+  BorderProps,
 } from 'styled-system'
 
 interface InititalProps
@@ -18,7 +20,8 @@ interface InititalProps
     SizeProps,
     FlexboxProps,
     SpaceProps,
-    LayoutProps {}
+    LayoutProps,
+    BorderProps {}
 
 interface CustomProps {
   bordered?: boolean
@@ -35,6 +38,7 @@ const Initial = styled.div`
   ${flexbox};
   ${space};
   ${layout};
+  ${border}
   ${bordered}
 `
 

@@ -1,7 +1,7 @@
 import { ComponentPropsWithRef, forwardRef } from 'react'
 import styled from 'styled-components'
-import { Flex } from 'shared/Flex'
-import { Text } from 'shared/Text'
+import { Flex } from 'components/shared/Flex'
+import { Text } from 'components/shared/Text'
 import {
   color,
   ColorProps,

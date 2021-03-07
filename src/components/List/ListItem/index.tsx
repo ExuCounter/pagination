@@ -1,4 +1,4 @@
-import { Flex } from 'shared/Flex'
+import { Flex } from 'components/shared/Flex'
 
 export type ListItemProps = {
   title: string
