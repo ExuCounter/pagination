@@ -97,7 +97,8 @@ export const List = ({
           />
         </>
       )}
-      {!paginated && <PlainList data={list} />}
+      {!paginated && filteredList && <PlainList data={filteredList} />}
+      {!paginated && !filteredList && <PlainList data={list} />}
     </Box>
   )
 }
