@@ -4,26 +4,12 @@ import { Select } from 'components/shared/Select'
 import { Input } from 'components/shared/Input'
 import { Button } from 'components/shared/Button'
 import { Flex } from 'components/shared/Flex'
+import { FAKE_LIST_DATA } from 'data/fakeData'
 
 type SelectOptionType = {
   value: number
   label: string
 }
-
-const FAKE_DATA = [
-  { title: '1aa' },
-  { title: '2bb' },
-  { title: '3' },
-  { title: '4bbbb' },
-  { title: '5' },
-  { title: '6aa' },
-  { title: '7bbbb' },
-  { title: '8' },
-  { title: '9aa' },
-  { title: '10aaaa' },
-  { title: '11aa' },
-  { title: '12' },
-]
 
 const SELECT_OPTIONS = [
   {
@@ -162,7 +148,7 @@ export const MainPage = () => {
             currentOption={currentOption}
           />
           <List
-            data={FAKE_DATA}
+            data={FAKE_LIST_DATA}
             visibleItems={currentOption.value}
             filterString={filterString}
             paginated={isPaginationEnabled}
