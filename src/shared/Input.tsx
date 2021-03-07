@@ -1,23 +1,59 @@
 import { ComponentPropsWithRef, forwardRef } from 'react'
-type CustomInputProps = {
-  mask?: 'number' | 'code'
+import styled from 'styled-components'
+import { Flex } from 'shared/Flex'
+import { Text } from 'shared/Text'
+import {
+  color,
+  ColorProps,
+  size,
+  SizeProps,
+  display,
+  DisplayProps,
+  space,
+  SpaceProps,
+  typography,
+  TypographyProps,
+  layout,
+  LayoutProps,
+} from 'styled-system'
+
+interface InititalProps
+  extends ColorProps,
+    SizeProps,
+    DisplayProps,
+    SpaceProps,
+    TypographyProps,
+    LayoutProps {}
+
+const Initial = styled.input`
+  ${color}
+  ${size}
+  ${display}
+  ${space}
+  ${typography}
+  ${layout}
+`
+
+type CustomProps = {
   label?: string
 }
 
-type InputProps = ComponentPropsWithRef<'input'> & CustomInputProps
+type InputProps = ComponentPropsWithRef<'input'> & InititalProps & CustomProps
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ mask, label, ...props }, ref) => {
+  ({ label, ...props }, ref) => {
     return (
-      <>
+      <Flex alignItems="center">
         {label && (
           <label>
-            <span>{label}</span>
-            <input {...props} ref={ref} />
+            <Text display="inline" pr={2}>
+              {label}
+            </Text>
+            <Initial {...props} ref={ref} />
           </label>
         )}
-        {!label && <input {...props} ref={ref} />}
-      </>
+        {!label && <Initial {...props} ref={ref} />}
+      </Flex>
     )
   }
 )

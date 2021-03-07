@@ -1,59 +1,47 @@
 import { ListItem, ListItemProps } from './ListItem'
-import { PropsWithChildren, useState, useMemo, useEffect } from 'react'
-import './style.css'
+import { useState, useMemo, useEffect } from 'react'
+import { ValueType } from 'react-select'
+import { Controls, VisibleItemsOptionType } from './Controls'
+import { Button } from 'shared/Button'
+import { Flex } from 'shared/Flex'
+import { Box } from 'shared/Box'
+import { Text } from 'shared/Text'
 
 const INITIAL_PAGE_NUMBER = 1
 
 type ListProps = {
   data: ListItemProps[]
-  visibleItemsNumber: number
-  filterByTitle?: string
+  visibleItems: number
 }
 
-type ListPaginationArrowProps = {
-  content: string
-  disabled: boolean
-  onClick: () => void
-}
-
-type ListPaginationArrowsContainerProps = PropsWithChildren<{}>
-
-export const ListPaginationArrowsContainer = ({
-  children,
-}: ListPaginationArrowsContainerProps) => (
-  <div className="pagination-list-arrows">{children}</div>
-)
-
-export const ListPaginationArrow = ({
-  content,
-  disabled,
-  onClick,
-}: ListPaginationArrowProps) => {
-  return (
-    <button
-      disabled={disabled}
-      onClick={onClick}
-      className="pagination-list-arrow"
-    >
-      {content}
-    </button>
-  )
-}
-
-export const List = ({
-  data: list,
-  filterByTitle,
-  visibleItemsNumber,
-}: ListProps) => {
+export const List = ({ data: list, visibleItems }: ListProps) => {
   const [pageNumber, setPageNumber] = useState<number>(INITIAL_PAGE_NUMBER)
+  const options: VisibleItemsOptionType[] = new Array(visibleItems)
+    .fill(0)
+    .map((_, idx) => ({ value: idx + 1, label: `${idx + 1}` }))
+  const [currentOption, setCurrentOption] = useState<
+    ValueType<VisibleItemsOptionType, false>
+  >(options[0])
+
+  const [filterString, setFilterString] = useState<string>('')
+
+  const handleSelect = (value: ValueType<VisibleItemsOptionType, false>) => {
+    setCurrentOption(value)
+  }
+
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFilterString(e.target.value)
+  }
 
   const {
     isPreviousPageAvailable,
     isNextPageAvailable,
     filteredList,
+    visibleItemsNumber,
   } = useMemo(() => {
-    const filteredList = filterByTitle
-      ? list.filter((item) => item.title.includes(filterByTitle))
+    const visibleItemsNumber = currentOption?.value || 1
+    const filteredList = filterString
+      ? list.filter((item) => item.title.includes(filterString))
       : list
     const availablePagesNumber = Math.ceil(
       filteredList.length / visibleItemsNumber
@@ -65,8 +53,9 @@ export const List = ({
       isPreviousPageAvailable,
       isNextPageAvailable,
       filteredList,
+      visibleItemsNumber,
     }
-  }, [pageNumber, visibleItemsNumber, list, filterByTitle])
+  }, [pageNumber, list, filterString, currentOption])
 
   useEffect(() => {
     setPageNumber(INITIAL_PAGE_NUMBER)
@@ -98,23 +87,24 @@ export const List = ({
   }
 
   return (
-    <div className="list-container">
+    <Box p={4}>
+      <Controls
+        handleInput={handleInput}
+        handleSelect={handleSelect}
+        selectOptions={options}
+      />
       {visibleList.map((item, idx) => {
         return <ListItem key={idx} {...item} />
       })}
-      <p className="page-number">Page number {pageNumber}</p>
-      <ListPaginationArrowsContainer>
-        <ListPaginationArrow
-          disabled={!isPreviousPageAvailable}
-          content={'<'}
-          onClick={goToPreviousPage}
-        />
-        <ListPaginationArrow
-          disabled={!isNextPageAvailable}
-          content={'>'}
-          onClick={goToNextPage}
-        />
-      </ListPaginationArrowsContainer>
-    </div>
+      <Text className="page-number">Page number {pageNumber}</Text>
+      <Flex width={200} justifyContent="space-around">
+        <Button disabled={!isPreviousPageAvailable} onClick={goToPreviousPage}>
+          {'<'}
+        </Button>
+        <Button disabled={!isNextPageAvailable} onClick={goToNextPage}>
+          {'>'}
+        </Button>
+      </Flex>
+    </Box>
   )
 }

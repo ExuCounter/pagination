@@ -1,10 +1,8 @@
 import { List } from '../List'
-import { useState, useRef } from 'react'
-import { ValueType } from 'react-select'
-import { Select } from '../shared/Select'
-import { Input } from '../shared/Input'
 
-const fakeData = [
+const VISIBLE_ITEMS = 4
+
+const FAKE_DATA = [
   { title: '1aa' },
   { title: '2bb' },
   { title: '3' },
@@ -19,44 +17,6 @@ const fakeData = [
   { title: '12' },
 ]
 
-type OptionType = { value: number; label: string }
-
-const options: OptionType[] = [
-  { value: 1, label: 'One Element' },
-  { value: 2, label: 'Two Elements' },
-  { value: 3, label: 'Three Elements' },
-]
-
 export const MainPage = () => {
-  const [currentOption, setCurrentOption] = useState<
-    ValueType<OptionType, false>
-  >(options[0])
-  const [inputValue, setInputValue] = useState<string>('')
-  const ref = useRef<HTMLInputElement>(null)
-
-  const handleSelect = (value: ValueType<OptionType, false>) => {
-    setCurrentOption(value)
-  }
-
-  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value)
-  }
-
-  return (
-    <>
-      <div style={{ display: 'flex', width: '100%' }}>
-        <Select
-          options={options}
-          defaultValue={options[0]}
-          onChange={handleSelect}
-        />
-        <Input value={inputValue} ref={ref} onChange={handleInput} />
-      </div>
-      <List
-        filterByTitle={inputValue}
-        visibleItemsNumber={currentOption!.value}
-        data={fakeData}
-      />
-    </>
-  )
+  return <List data={FAKE_DATA} visibleItems={VISIBLE_ITEMS} />
 }

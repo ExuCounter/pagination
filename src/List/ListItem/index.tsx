@@ -1,9 +1,13 @@
-import './style.css'
+import { Flex } from 'shared/Flex'
 
 export type ListItemProps = {
   title: string
 }
 
 export const ListItem = ({ title }: ListItemProps) => {
-  return <div className="list-item">{title}</div>
+  return (
+    <Flex bordered p={2}>
+      {title}
+    </Flex>
+  )
 }
