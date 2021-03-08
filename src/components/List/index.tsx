@@ -25,7 +25,7 @@ export const PlainList = ({ data: list }: PlainListProps) => (
 )
 
 export const List = ({
-  data: list,
+  data: initialList,
   visibleItems = 5,
   filterString,
   nextPageButtonText = '>',
@@ -40,8 +40,8 @@ export const List = ({
     filteredList,
   } = useMemo(() => {
     const filteredList = filterString
-      ? list.filter((item) => item.title.includes(filterString))
-      : list
+      ? initialList.filter((item) => item.title.includes(filterString))
+      : initialList
     const availablePagesNumber = Math.ceil(filteredList.length / visibleItems)
     const isPreviousPageAvailable = pageNumber - 1 > 0
     const isNextPageAvailable = pageNumber + 1 <= availablePagesNumber
@@ -54,7 +54,7 @@ export const List = ({
       isNextPageAvailable,
       filteredList,
     }
-  }, [pageNumber, list, filterString, visibleItems])
+  }, [pageNumber, initialList, filterString, visibleItems])
 
   useEffect(() => {
     setPageNumber(INITIAL_PAGE_NUMBER)
@@ -101,7 +101,7 @@ export const List = ({
         </>
       )}
       {!paginated && filteredList && <PlainList data={filteredList} />}
-      {!paginated && !filteredList && <PlainList data={list} />}
+      {!paginated && !filteredList && <PlainList data={initialList} />}
     </Box>
   )
 }
