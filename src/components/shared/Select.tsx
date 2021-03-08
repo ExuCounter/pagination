@@ -8,6 +8,7 @@ type SelectProps<T, isMulti extends boolean> = RSelectProps<T, isMulti>
 const customStyles = {
   option: (provided: any) => ({
     ...provided,
+    fontSize: '12px',
   }),
   control: (provided: any) => ({
     ...provided,

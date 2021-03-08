@@ -17,11 +17,11 @@ type ListProps = {
 type PlainListProps = Pick<ListProps, 'data'>
 
 export const PlainList = ({ data: list }: PlainListProps) => (
-  <>
+  <Box>
     {list.map((item, idx) => (
       <ListItem key={idx} {...item} />
     ))}
-  </>
+  </Box>
 )
 
 export const List = ({
@@ -46,6 +46,9 @@ export const List = ({
     const isPreviousPageAvailable = pageNumber - 1 > 0
     const isNextPageAvailable = pageNumber + 1 <= availablePagesNumber
 
+    if (filteredList.length === 0) {
+      setPageNumber(INITIAL_PAGE_NUMBER)
+    }
     return {
       isPreviousPageAvailable,
       isNextPageAvailable,
@@ -82,7 +85,7 @@ export const List = ({
   }
 
   return (
-    <Box>
+    <Box overflowY={paginated ? 'auto' : 'scroll'}>
       {paginated && (
         <>
           <PlainList data={visibleList} />

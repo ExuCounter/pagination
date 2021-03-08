@@ -53,7 +53,8 @@ const sizing = ({ sizing }: ButtonProps) => {
   switch (sizing) {
     case 'md': {
       return css`
-        padding: 7px 10px;
+        padding: 6px 8px;
+        font-size: 12px;
       `
     }
   }

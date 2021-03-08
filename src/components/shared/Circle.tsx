@@ -38,7 +38,7 @@ const sizing = ({ sizing }: CircleProps) => {
         width: 20px;
         height: 20px;
         font-size: 12px;
-        background-color: ${(props) => props.theme.colors.main};
+        background-color: ${(props) => props.theme.colors.secondary};
         color: ${(props) => props.theme.colors.white};
         border: none;
       `

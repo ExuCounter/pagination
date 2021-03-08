@@ -26,6 +26,12 @@ interface InititalProps
     LayoutProps {}
 
 const Initial = styled.input`
+  padding: 6px 5px;
+  font-size: 12px;
+  border: solid 1px #e2e2e2;
+  width: 100%;
+  border-radius: 4px;
+  box-sizing: border-box;
   ${color}
   ${size}
   ${display}
@@ -46,9 +52,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       <Flex alignItems="center">
         {label && (
           <label>
-            <Text display="inline" pr={2}>
-              {label}
-            </Text>
+            <Text display="inline">{label}</Text>
             <Initial {...props} ref={ref} />
           </label>
         )}

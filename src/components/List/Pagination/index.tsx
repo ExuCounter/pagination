@@ -27,6 +27,8 @@ export const ListPagination = ({
       <Button
         disabled={!isPreviousPageAvailable}
         onClick={previousPageButtonHandler}
+        variant="primary"
+        borderRadius="5px"
       >
         {previousPageButtonText}
       </Button>
@@ -36,7 +38,12 @@ export const ListPagination = ({
           {currentPageNumber}
         </Circle>
       </Flex>
-      <Button disabled={!isNextPageAvailable} onClick={nextPageButtonHandler}>
+      <Button
+        disabled={!isNextPageAvailable}
+        onClick={nextPageButtonHandler}
+        borderRadius="5px"
+        variant="primary"
+      >
         {nextPageButtonText}
       </Button>
     </Flex>
